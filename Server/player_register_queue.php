@@ -1,35 +1,18 @@
 <?php
     require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/connect.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/enums.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/globals.php';
     
-    // The player name needs to be set in request
-    if (!isset($_GET['player_name']))
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/player_register_queue_hfile.php';
+
+    $player_name = GetPlayerNameInRequest();
+    if ($player_name == "")
     {
         die(eRegisterQueueErrors::MISSING_PLAYER_NAME_IN_REQUEST);
     }
 
-    // The player name can't be empty in request
-    $player_name = $_GET['player_name'];
-    if ($player_name == "")
-    {
-        die(eRegisterQueueErrors::PLAYER_NAME_CANT_BE_EMPTY);
-    }
+    $player_unregister = IsPlayerUnregisterInRequest();
 
-    // Check if parameter to unregister from queue is existing in request
-    $player_unregister = false;
-    if (isset($_GET['player_unregister']))
-    {
-        $player_unregister = true;
-    }
-
-    // Take original informations from queue such as queue_id and queue_status
-    $sql = "SELECT * FROM table_queue
-            ORDER BY queue_id DESC LIMIT 1;";
-
-    $statement = $db->prepare($sql);
-    $statement->execute();
-
-    $table_queue_last_row = $statement->fetch();
+    $table_queue_last_row = GetLastTableQueueRow();
     if (!$table_queue_last_row)
     {
         die(eRegisterQueueErrors::FAILED_FETCHING_QUEUE_STATUS);
@@ -44,13 +27,7 @@
     // Or we return an error message anyway
     if ($player_unregister)
     {
-        $sql = "SELECT * FROM table_player
-                ORDER BY player_id DESC LIMIT 1;";
-
-        $statement = $db->prepare($sql);
-        $statement->execute();
-
-        $table_player_last_row = $statement->fetch();
+        $table_player_last_row = GetLastTablePlayerRow();
         if (!$table_player_last_row)
         {
             die(eRegisterQueueErrors::FAILED_FETCHING_LAST_PLAYER);
@@ -62,21 +39,9 @@
             die(eRegisterQueueErrors::FAILED_UNREGISTERING_PLAYER);
         }
         
-        $sql = "DELETE FROM table_player 
-                ORDER BY player_id DESC LIMIT 1;";
-
-        $statement = $db->prepare($sql);
-        $statement->execute();
-
+        RemoveLastTablePlayerRow();
         $queue_status -= 1;
-
-        $sql = "UPDATE table_queue SET queue_status = :queue_status
-                WHERE queue_id = :queue_id;";
-
-        $statement = $db->prepare($sql);
-        $statement->bindParam(":queue_status", $queue_status);
-        $statement->bindParam(":queue_id", $queue_id);
-        $statement->execute();
+        UpdateQueueStatus($queue_id, $queue_status);
 
         die(eRegisterQueueSuccess::SUCCESSFULLY_UNREGISTERED_PLAYER);
     }
@@ -91,30 +56,16 @@
             $player_color = ePlayerColors::RED;
         }
 
-        $sql = "INSERT INTO table_player (player_name, player_color, queue_id) 
-                VALUES (:player_name, :player_color, :queue_id);";
-
-        $statement = $db->prepare($sql);
-        $statement->bindParam(":player_name", $player_name);
-        $statement->bindParam(":player_color", $player_color);
-        $statement->bindParam(":queue_id", $queue_id);
-        $statement->execute();
-
+        RegisterPlayerInTableQueue($player_name, $player_color, $queue_id);
         $queue_status += 1;
+        UpdateQueueStatus($queue_id, $queue_status);
 
-        $sql = "UPDATE table_queue SET queue_status = :queue_status
-                WHERE queue_id = :queue_id;";
+        // We can launch the party if the queue is ready (2 players in queue)
+        if ($queue_status == eQueueStatus::QUEUE_READY)
+        {
+            header('location: queue_create_party.php');
+        }
 
-        $statement = $db->prepare($sql);
-        $statement->bindParam(":queue_status", $queue_status);
-        $statement->bindParam(":queue_id", $queue_id);
-        $statement->execute();
         die(eRegisterQueueSuccess::SUCCESSFULLY_REGISTERED_PLAYER);
-    }
-
-    // We can launch the party if the queue is ready (2 players in queue)
-    if ($queue_status == eQueueStatus::QUEUE_READY)
-    {
-        header('location: queue_create_party.php');
     }
 ?>

@@ -22,4 +22,26 @@
         const YELLOW = 0;
         const RED = 1;
     }
+
+    class eCreatePartyErrors {
+        const QUEUE_NOT_READY = "QUEUE_NOT_READY";
+        const FAILED_TO_GET_PLAYERS_FROM_QUEUE = "FAILED_TO_GET_PLAYERS_FROM_QUEUE";
+    }
+
+    class ePartyStatus {
+        const TURN_PLAYER_1 = 0;
+        const TURN_PLAYER_2 = 1;
+        const WINNER_PLAYER_1 = "WINNER_PLAYER_1";
+        const WINNER_PLAYER_2 = "WINNER_PLAYER_2";
+    }
+
+    $EMPTY_PARTY_GRID = [
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0]
+    ];
+    $EMPTY_PARTY_GRID_JSON = json_encode(["party_grid" => $EMPTY_PARTY_GRID]);
 ?>
