@@ -3,6 +3,7 @@
     require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/globals.php';
     
     require_once $_SERVER['DOCUMENT_ROOT'].'/Server/player_register_queue_hfile.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/player_play_party_hfile.php';
 
     $player_name = GetPlayerNameInRequest();
     if ($player_name == "")
@@ -37,6 +38,12 @@
         if ($last_player_name != $player_name)
         {
             die(eRegisterQueueErrors::FAILED_UNREGISTERING_PLAYER);
+        }
+
+        $last_player_id = $table_player_last_row['player_id'];
+        if (IsPlayerAlreadyInParty($last_player_id))
+        {
+            die(eRegisterQueueErrors::PLAYER_ALREADY_IN_PARTY);
         }
         
         RemoveLastTablePlayerRow();

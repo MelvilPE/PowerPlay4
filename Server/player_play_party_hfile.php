@@ -38,4 +38,22 @@
             $statement->execute();
         }
     }
+
+    function IsPlayerAlreadyInParty($param_player_id)
+    {
+        global $db;
+        $sql = "SELECT * FROM player_play_party
+                WHERE player_id = :player_id;";
+
+        $statement = $db->prepare($sql);
+        $statement->bindParam(":player_id", $param_player_id);
+        $statement->execute();
+
+        $player_row = $statement->fetch();
+        if (!$player_row)
+        {
+            return false;
+        }
+        return true;
+    }
 ?>
