@@ -23,7 +23,7 @@
     }
 
     // We can create a new party, since queue was ready
-    $party_status = mt_rand(ePartyStatus::TURN_PLAYER_1, ePartyStatus::TURN_PLAYER_2);
+    $party_status = mt_rand(ePartyStatus::TURN_PLAYER_YELLOW, ePartyStatus::TURN_PLAYER_RED);
     $party_grid = $EMPTY_PARTY_GRID_JSON;
     CreateNewPartyRow($party_status, $party_grid, $queue_id);
     SetQueuePlayersInParty($queue_id);

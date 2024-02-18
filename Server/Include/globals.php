@@ -19,9 +19,10 @@
         const QUEUE_READY = 2;
     }
 
-    class ePlayerColors {
-        const YELLOW = 0;
-        const RED = 1;
+    class eGridColors {
+        const EMPTY = 0;
+        const YELLOW = 1;
+        const RED = 2;
     }
 
     class eCreatePartyErrors {
@@ -30,8 +31,8 @@
     }
 
     class ePartyStatus {
-        const TURN_PLAYER_1 = 0;
-        const TURN_PLAYER_2 = 1;
+        const TURN_PLAYER_YELLOW = eGridColors::YELLOW;
+        const TURN_PLAYER_RED = eGridColors::RED;
         const WINNER_PLAYER_1 = "WINNER_PLAYER_1";
         const WINNER_PLAYER_2 = "WINNER_PLAYER_2";
     }
