@@ -74,12 +74,14 @@
     function RegisterPlayerInTableQueue($param_player_name, $param_player_color, $param_queue_id)
     {
         global $db;
-        $sql = "INSERT INTO table_player (player_name, player_color, queue_id) 
-                VALUES (:player_name, :player_color, :queue_id);";
+        $sql = "INSERT INTO table_player (player_name, player_color, party_id, queue_id) 
+                VALUES (:player_name, :player_color, :party_id, :queue_id);";
 
         $statement = $db->prepare($sql);
         $statement->bindParam(":player_name", $param_player_name);
         $statement->bindParam(":player_color", $param_player_color);
+        $empty_party_id = 0;
+        $statement->bindParam(":party_id", $empty_party_id);
         $statement->bindParam(":queue_id", $param_queue_id);
         $statement->execute();
     }

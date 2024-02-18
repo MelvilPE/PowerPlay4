@@ -26,15 +26,17 @@
         $statement->execute();
 
         $players_in_party = $statement->fetchAll();
-        
         $param_party_id = GetLastPartyId();
+
         foreach ($players_in_party as $each_player)
         {
-            $sql = "INSERT INTO player_play_party (player_id, party_id) VALUES (:player_id, :party_id);";
             $each_player_id = $each_player['player_id'];
+            $sql = "UPDATE table_player SET party_id = :party_id
+                    WHERE player_id = :player_id;";
+
             $statement = $db->prepare($sql);
-            $statement->bindParam(":player_id", $each_player_id);
             $statement->bindParam(":party_id", $param_party_id);
+            $statement->bindParam(":player_id", $each_player_id);
             $statement->execute();
         }
     }
