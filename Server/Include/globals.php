@@ -21,8 +21,8 @@
 
     class eGridColors {
         const EMPTY = 0;
-        const YELLOW = 1;
-        const RED = 2;
+        const PLAYER_1 = 1;
+        const PLAYER_2 = 2;
     }
 
     class eCreatePartyErrors {
@@ -31,10 +31,10 @@
     }
 
     class ePartyStatus {
-        const TURN_PLAYER_YELLOW = eGridColors::YELLOW;
-        const TURN_PLAYER_RED = eGridColors::RED;
-        const WINNER_PLAYER_1 = "WINNER_PLAYER_1";
-        const WINNER_PLAYER_2 = "WINNER_PLAYER_2";
+        const TURN_PLAYER_1 = eGridColors::PLAYER_1;
+        const TURN_PLAYER_2 = eGridColors::PLAYER_2;
+        const WINNER_PLAYER_1 = 3;
+        const WINNER_PLAYER_2 = 4;
     }
 
     $EMPTY_PARTY_GRID = [
@@ -46,4 +46,19 @@
         [0, 0, 0, 0, 0, 0, 0]
     ];
     $EMPTY_PARTY_GRID_JSON = json_encode(["party_grid" => $EMPTY_PARTY_GRID]);
+
+    class ePlayerPlayPartyErrors {
+        const ERROR_PLAYER_ID_IS_NOT_SET = "ERROR_PLAYER_ID_IS_NOT_SET";
+        const ERROR_PLAYER_GRID_IS_NOT_SET = "ERROR_PLAYER_GRID_IS_NOT_SET";
+        const ERROR_PLAYER_NOT_PARTY = "ERROR_PLAYER_NOT_PARTY";
+        const ERROR_PARTY_ALREADY_FINISHED = "ERROR_PARTY_ALREADY_FINISHED";
+        const ERROR_WRONG_PLAYER_TURN = "ERROR_WRONG_PLAYER_TURN";
+        const ERROR_WRONG_PLAYER_GRID = "ERROR_WRONG_PLAYER_GRID";
+    }
+
+    class ePlayerPlayPartySuccess {
+        const SUCCESSFULLY_UPDATED_GRID = "SUCCESSFULLY_UPDATED_GRID";
+        const WINNER_PLAYER_1 = "WINNER_PLAYER_1";
+        const WINNER_PLAYER_2 = "WINNER_PLAYER_2";
+    }
 ?>

@@ -57,10 +57,10 @@
     // Then we will have to insert that player anyway
     if ($queue_status < eQueueStatus::QUEUE_READY)
     {
-        $player_color = eGridColors::YELLOW;
+        $player_color = eGridColors::PLAYER_1;
         if ($queue_status == eQueueStatus::ONE_PLAYER_IN_QUEUE)
         {
-            $player_color = eGridColors::RED;
+            $player_color = eGridColors::PLAYER_2;
         }
 
         RegisterPlayerInTableQueue($player_name, $player_color, $queue_id);
