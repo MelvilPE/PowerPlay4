@@ -45,7 +45,7 @@
     function IsPlayerAlreadyInParty($param_player_id)
     {
         global $db;
-        $sql = "SELECT * FROM player_play_party
+        $sql = "SELECT * FROM table_player
                 WHERE player_id = :player_id;";
 
         $statement = $db->prepare($sql);
@@ -57,6 +57,13 @@
         {
             return false;
         }
+
+        $local_party_id = $player_row['party_id'];
+        if (!$local_party_id)
+        {
+            return false;
+        }
+
         return true;
     }
 
