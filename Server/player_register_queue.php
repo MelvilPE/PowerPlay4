@@ -73,7 +73,8 @@
         // We can launch the party if the queue is ready (2 players in queue)
         if ($queue_status == eQueueStatus::QUEUE_READY)
         {
-            header('location: queue_create_party.php');
+            header('location: http://powerplay4/Server/queue_create_party.php');
+            die(eCreatePartySuccess::SUCCESSFULLY_CREATED_PARTY);
         }
 
         setcookie('player_id', $player_id, time() + 3600, '/');

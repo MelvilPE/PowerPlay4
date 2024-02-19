@@ -30,6 +30,10 @@
         const FAILED_TO_GET_PLAYERS_FROM_QUEUE = "FAILED_TO_GET_PLAYERS_FROM_QUEUE";
     }
 
+    class eCreatePartySuccess {
+        const SUCCESSFULLY_CREATED_PARTY = "SUCCESSFULLY_CREATED_PARTY";
+    }
+
     class ePartyStatus {
         const TURN_PLAYER_1 = eGridColors::PLAYER_1;
         const TURN_PLAYER_2 = eGridColors::PLAYER_2;

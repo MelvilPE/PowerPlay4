@@ -1,0 +1,22 @@
+.td-childrens {
+	padding: 0px 0px 0px 0px;
+	width: 70px;
+	height: 70px;
+}
+
+.div-square {
+	width: 70px;
+	height: 70px;
+}
+
+.empty-color {
+	background-color: gray;
+}
+
+.yellow-color {
+	background-color: yellow;
+}
+
+.red-color {
+	background-color: red;
+}

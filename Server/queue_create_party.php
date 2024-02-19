@@ -30,4 +30,7 @@
 
     // We can create a new queue, since party has been created
     CreateNewQueueRow();
+
+    header('location: http://powerplay4/Client/player_play_party.php');
+    die(eCreatePartySuccess::SUCCESSFULLY_CREATED_PARTY);
 ?>
