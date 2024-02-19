@@ -9,6 +9,7 @@
         }
 
         $result = $_GET['player_name'];
+        $result = htmlspecialchars($result);
         return $result;
     }
 
