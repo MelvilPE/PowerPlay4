@@ -73,6 +73,7 @@
             header('location: queue_create_party.php');
         }
 
+        header('location: http://powerplay4/Client/player_register_queue.php?player_name='.$player_name);
         die(eRegisterQueueSuccess::SUCCESSFULLY_REGISTERED_PLAYER);
     }
 ?>
