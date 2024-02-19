@@ -1,8 +1,7 @@
 <?php
-    $unregister_request = "";
-    if (isset($_GET['player_name']))
+    if (isset($_COOKIE['player_name']))
     {
-        $unregister_request = "?player_name=".$_GET['player_name']."&player_unregister=true";
+        $unregister_request = "?player_name=".$_COOKIE['player_name']."&player_unregister=true";
     }
 ?>
 
