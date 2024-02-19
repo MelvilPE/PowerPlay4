@@ -1,4 +1,13 @@
 <?php
+    $player_id = 0;
+    if (isset($_COOKIE['player_id']))
+        $player_id = $_COOKIE['player_id'];
+
+    $player_name = "";
+    if (isset($_COOKIE['player_name']))
+        $player_name = $_COOKIE['player_name'];
+
+    $unregister_request = "";
     if (isset($_COOKIE['player_name']))
     {
         $unregister_request = "?player_name=".$_COOKIE['player_name']."&player_unregister=true";
@@ -18,6 +27,8 @@
     <div class="container center-items">
         <div class="w-50 flex-column align-items-center justify-content-center">
             <h1 class="text-primary text-center">Waiting for another player!</h1>
+            <h2 class="text-info text-center">Your player name is: <?=$player_name;?></h1>
+            <h3 class="text-info text-center">Your player id is: <?=$player_id;?></h1>
             <br>
             <a class="btn btn-primary w-100" href="http://powerplay4/Server/player_register_queue.php<?=$unregister_request;?>" role="button">Unregister from queue!</a>
         </div>

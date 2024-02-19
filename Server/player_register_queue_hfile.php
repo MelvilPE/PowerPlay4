@@ -85,5 +85,12 @@
         $statement->bindParam(":queue_id", $param_queue_id);
         $statement->execute();
     }
+
+    function GetLastTablePlayerId()
+    {
+        $local_player_row = GetLastTablePlayerRow();
+        $result = $local_player_row['player_id'];
+        return $result;
+    }
 ?>
 
