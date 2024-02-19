@@ -50,6 +50,7 @@
         $queue_status -= 1;
         UpdateQueueStatus($queue_id, $queue_status);
 
+        header('location: http://powerplay4/Client/index.php');
         die(eRegisterQueueSuccess::SUCCESSFULLY_UNREGISTERED_PLAYER);
     }
 
