@@ -1,5 +1,5 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/globals.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Common/globals.php';
     require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Fetch/get_winner_name_from_party_id.php';
 
     if (!(isset($_GET['party_id']) && $_GET['party_id'] > 0))

@@ -1,10 +1,12 @@
 <?php
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Common/globals.php';
     require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/connect.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/globals.php';
-
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/player_register_queue_hfile.php';
     require_once $_SERVER['DOCUMENT_ROOT'].'/Server/queue_create_party_hfile.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/player_play_party_hfile.php';
+
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_queue_hfile.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_party_hfile.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_player_queue_hfile.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_queue_party_hfile.php';
 
     // We want to create party only if queue is ready
     // It's more secure to check status before doing this

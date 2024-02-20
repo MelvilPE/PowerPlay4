@@ -1,6 +1,8 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/globals.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/player_play_party_hfile.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Common/globals.php';
+
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_party_hfile.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_player_party_hfile.php';
 
     if (!isset($_COOKIE['player_id']) || !isset($_COOKIE['player_name']))
     {

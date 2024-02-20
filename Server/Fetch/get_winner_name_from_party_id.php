@@ -1,7 +1,11 @@
 <?php
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Common/globals.php';
     require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/connect.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/player_play_party_hfile.php';
     require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Fetch/get_winner_name_from_party_id_hfile.php';
+
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_party_hfile.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_player_queue_hfile.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_queue_party_hfile.php';
 
     function get_winner_name_from_party_id($param_party_id)
     {	
