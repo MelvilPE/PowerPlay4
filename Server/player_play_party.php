@@ -3,19 +3,14 @@
 
 	require_once $_SERVER['DOCUMENT_ROOT'].'/Server/player_play_party_hfile.php';
 
-	$player_id = GetPlayerIdInRequest();
-	if ($player_id == 0)
-	{
+	if (!isset($_COOKIE['player_id']))
+    {
+        header('location: http://powerplay4/Client/Errors/player_play_party_missing_cookies.php');
 		die(ePlayerPlayPartyErrors::ERROR_PLAYER_ID_IS_NOT_SET);
-	}
+    }
+	$player_id = $_COOKIE['player_id'];
 
-	$player_grid = GetPlayerGridInRequest();
-	if ($player_grid == "")
-	{
-		die(ePlayerPlayPartyErrors::ERROR_PLAYER_GRID_IS_NOT_SET);
-	}
-
-	$party_id = GetPlayerPartyIdFromPlayerId($player_id);
+	$party_id = GetPartyIdFromPlayerId($player_id);
 	if ($party_id == 0)
 	{
 		die(ePlayerPlayPartyErrors::ERROR_PLAYER_NOT_PARTY);
@@ -28,9 +23,36 @@
 	}
 
 	$player_color = GetPlayerColorFromId($player_id);
+
+	$player_give_up = GetPlayerGiveUpInRequest();
+	if ($player_give_up)
+	{
+		$message;
+		if ($player_color == eGridColors::PLAYER_2)
+		{
+			$party_status = ePartyStatus::WINNER_PLAYER_1;
+			$message = ePlayerPlayPartySuccess::WINNER_PLAYER_1;
+		}
+		else
+		{
+			$party_status = ePartyStatus::WINNER_PLAYER_2;
+			$message = ePlayerPlayPartySuccess::WINNER_PLAYER_2;
+		}
+
+		UpdatePartyStatus($party_id, $party_status);
+		header('location: http://powerplay4/Client/player_play_party.php');
+		die($message);
+	}
+
 	if ($player_color != $party_status)
 	{
 		die(ePlayerPlayPartyErrors::ERROR_WRONG_PLAYER_TURN);
+	}
+
+	$player_grid = GetPlayerGridInRequest();
+	if ($player_grid == "")
+	{
+		die(ePlayerPlayPartyErrors::ERROR_PLAYER_GRID_IS_NOT_SET);
 	}
 
 	if (!UpdatePartyGrid($party_id, $player_grid, $player_color))

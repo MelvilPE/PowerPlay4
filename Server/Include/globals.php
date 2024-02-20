@@ -65,4 +65,12 @@
         const WINNER_PLAYER_1 = "WINNER_PLAYER_1";
         const WINNER_PLAYER_2 = "WINNER_PLAYER_2";
     }
+
+    class eFetchWinnerNameErrors {
+        const ERROR_PARTY_ID_IS_NOT_SET = "ERROR_PARTY_ID_IS_NOT_SET";
+    }
+
+    class eCookiesErrors {
+        const MISSING_COOKIES_FOR_PARTY = "MISSING_COOKIES_FOR_PARTY";
+    }
 ?>

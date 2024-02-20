@@ -67,8 +67,10 @@
         RegisterPlayerInTableQueue($player_name, $player_color, $queue_id);
         $queue_status += 1;
         UpdateQueueStatus($queue_id, $queue_status);
-
         $player_id = GetLastTablePlayerId();
+
+        setcookie('player_id', $player_id, time() + 3600, '/');
+        setcookie('player_name', $player_name, time() + 3600, '/');
 
         // We can launch the party if the queue is ready (2 players in queue)
         if ($queue_status == eQueueStatus::QUEUE_READY)
@@ -76,9 +78,7 @@
             header('location: http://powerplay4/Server/queue_create_party.php');
             die(eCreatePartySuccess::SUCCESSFULLY_CREATED_PARTY);
         }
-
-        setcookie('player_id', $player_id, time() + 3600, '/');
-        setcookie('player_name', $player_name, time() + 3600, '/');
+        
         header('location: http://powerplay4/Client/player_register_queue.php');
         die(eRegisterQueueSuccess::SUCCESSFULLY_REGISTERED_PLAYER);
     }

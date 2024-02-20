@@ -1,12 +1,24 @@
 <?php
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/globals.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/player_play_party_hfile.php';
+
     if (!isset($_COOKIE['player_id']) || !isset($_COOKIE['player_name']))
     {
         header('location: http://powerplay4/Client/Errors/player_play_party_missing_cookies.php');
+        die(eCookiesErrors::MISSING_COOKIES_FOR_PARTY);
     }
 
     $player_id = $_COOKIE['player_id'];
     $player_name = $_COOKIE['player_name'];
-    $player_give_up = "?player_give_up=true";
+
+    $party_id = GetPartyIdFromPlayerId($player_id);
+    $party_status = GetPartyStatusFromId($party_id);
+
+    if ($party_status == ePartyStatus::WINNER_PLAYER_1 || $party_status == ePartyStatus::WINNER_PLAYER_2)
+    {
+        header('location: http://powerplay4/Client/party_finished.php?party_id='.$party_id);
+        die(ePlayerPlayPartyErrors::ERROR_PARTY_ALREADY_FINISHED);
+    }
 
     $player_turn_name = "";
 ?>
@@ -84,7 +96,7 @@
                 </tbody>
             </table>            
             <br>
-            <a class="btn btn-danger w-100" href="http://powerplay4/Server/player_play_party.php<?=$player_give_up;?>" role="button">Do you want to give up ?!</a>
+            <a class="btn btn-danger w-100" href="http://powerplay4/Server/player_play_party.php?player_give_up=true" role="button">Do you want to give up ?!</a>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>

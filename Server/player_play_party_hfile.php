@@ -67,18 +67,6 @@
         return true;
     }
 
-    function GetPlayerIdInRequest()
-    {
-        $result = 0;
-        if (!isset($_GET['player_id']))
-        {
-            return $result;
-        }
-
-        $result = $_GET['player_id'];
-        return $result;
-    }
-
     function GetPlayerGridInRequest()
     {
         $result = "";
@@ -91,7 +79,19 @@
         return $result;
     }
 
-    function GetPlayerPartyIdFromPlayerId($param_player_id)
+    function GetPlayerGiveUpInRequest()
+    {
+        $result = false;
+        if (!isset($_GET['player_give_up']))
+        {
+            return $result;
+        }
+
+        $result = $_GET['player_give_up'];
+        return $result;
+    }
+
+    function GetPartyIdFromPlayerId($param_player_id)
     {
         global $db;
         $sql = "SELECT * FROM table_player
@@ -224,7 +224,6 @@
         $local_party_grid = GetPartyGridFromId($param_party_id);
         $local_party_grid = json_decode($local_party_grid, true)['party_grid'];
 
-        // 
         for ($rowindex = 0; $rowindex < count($local_party_grid); $rowindex++)
         {
             for ($colindex = 0; $colindex < count($local_party_grid[0]) - 3; $colindex++)
