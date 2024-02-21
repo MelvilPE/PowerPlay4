@@ -12,6 +12,7 @@
         $local_party_status = GetPartyStatusFromId($param_party_id);
         if ($local_party_status != ePartyStatus::WINNER_PLAYER_1 && $local_party_status != ePartyStatus::WINNER_PLAYER_2)
         {
+            header('location: http://powerplay4/Client/player_play_party.php');
             die("ERROR_PARTY_NOT_FINISHED");
         }
 

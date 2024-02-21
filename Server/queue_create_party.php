@@ -13,6 +13,7 @@
     $table_queue_last_row = GetLastTableQueueRow();
     if (!$table_queue_last_row)
     {
+        header('location: http://powerplay4/Client/player_register_queue.php');
         die(eRegisterQueueErrors::FAILED_FETCHING_QUEUE_STATUS);
     }
 
@@ -21,6 +22,7 @@
 
     if ($queue_status != eQueueStatus::QUEUE_READY)
     {
+        header('location: http://powerplay4/Client/player_register_queue.php');
         die(eCreatePartyErrors::QUEUE_NOT_READY);
     }
 

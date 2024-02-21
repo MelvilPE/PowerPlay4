@@ -11,6 +11,7 @@
     $player_name = GetPlayerNameInRequest();
     if ($player_name == "")
     {
+        header('location: http://powerplay4/Client/index.php');
         die(eRegisterQueueErrors::MISSING_PLAYER_NAME_IN_REQUEST);
     }
 
@@ -19,6 +20,7 @@
     $table_queue_last_row = GetLastTableQueueRow();
     if (!$table_queue_last_row)
     {
+        header('location: http://powerplay4/Client/index.php');
         die(eRegisterQueueErrors::FAILED_FETCHING_QUEUE_STATUS);
     }
 
@@ -34,18 +36,21 @@
         $table_player_last_row = GetLastTablePlayerRow();
         if (!$table_player_last_row)
         {
+            header('location: http://powerplay4/Client/index.php');
             die(eRegisterQueueErrors::FAILED_FETCHING_LAST_PLAYER);
         }
 
         $last_player_name = $table_player_last_row['player_name'];
         if ($last_player_name != $player_name)
         {
+            header('location: http://powerplay4/Client/index.php');
             die(eRegisterQueueErrors::FAILED_UNREGISTERING_PLAYER);
         }
 
         $last_player_id = $table_player_last_row['player_id'];
         if (IsPlayerAlreadyInParty($last_player_id))
         {
+            header('location: http://powerplay4/Client/player_play_party.php');
             die(eRegisterQueueErrors::PLAYER_ALREADY_IN_PARTY);
         }
         
