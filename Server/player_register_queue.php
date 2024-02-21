@@ -1,17 +1,17 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Common/globals.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/connect.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/player_register_queue_hfile.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Common/globals.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Server/Include/connect.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Server/player_register_queue_hfile.php';
 
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_player_hfile.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_queue_hfile.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_player_queue_hfile.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_player_party_hfile.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Server/Include/DBTables/table_player_hfile.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Server/Include/DBTables/table_queue_hfile.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Server/Include/DBTables/table_player_queue_hfile.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Server/Include/DBTables/table_player_party_hfile.php';
 
     $player_name = GetPlayerNameInRequest();
     if ($player_name == "")
     {
-        header('location: http://powerplay4/Client/index.php');
+        header($HEADER_RELOCATION_START.'/Client/index.php');
         die(eRegisterQueueErrors::MISSING_PLAYER_NAME_IN_REQUEST);
     }
 
@@ -20,7 +20,7 @@
     $table_queue_last_row = GetLastTableQueueRow();
     if (!$table_queue_last_row)
     {
-        header('location: http://powerplay4/Client/index.php');
+        header($HEADER_RELOCATION_START.'/Client/index.php');
         die(eRegisterQueueErrors::FAILED_FETCHING_QUEUE_STATUS);
     }
 
@@ -36,21 +36,21 @@
         $table_player_last_row = GetLastTablePlayerRow();
         if (!$table_player_last_row)
         {
-            header('location: http://powerplay4/Client/index.php');
+            header($HEADER_RELOCATION_START.'/Client/index.php');
             die(eRegisterQueueErrors::FAILED_FETCHING_LAST_PLAYER);
         }
 
         $last_player_name = $table_player_last_row['player_name'];
         if ($last_player_name != $player_name)
         {
-            header('location: http://powerplay4/Client/index.php');
+            header($HEADER_RELOCATION_START.'/Client/index.php');
             die(eRegisterQueueErrors::FAILED_UNREGISTERING_PLAYER);
         }
 
         $last_player_id = $table_player_last_row['player_id'];
         if (IsPlayerAlreadyInParty($last_player_id))
         {
-            header('location: http://powerplay4/Client/player_play_party.php');
+            header($HEADER_RELOCATION_START.'/Client/player_play_party.php');
             die(eRegisterQueueErrors::PLAYER_ALREADY_IN_PARTY);
         }
         
@@ -58,7 +58,7 @@
         $queue_status -= 1;
         UpdateQueueStatus($queue_id, $queue_status);
 
-        header('location: http://powerplay4/Client/index.php');
+        header($HEADER_RELOCATION_START.'/Client/index.php');
         die(eRegisterQueueSuccess::SUCCESSFULLY_UNREGISTERED_PLAYER);
     }
 
@@ -83,11 +83,11 @@
         // We can launch the party if the queue is ready (2 players in queue)
         if ($queue_status == eQueueStatus::QUEUE_READY)
         {
-            header('location: http://powerplay4/Server/queue_create_party.php');
+            header($HEADER_RELOCATION_START.'/Server/queue_create_party.php');
             die(eCreatePartySuccess::SUCCESSFULLY_CREATED_PARTY);
         }
         
-        header('location: http://powerplay4/Client/player_register_queue.php');
+        header($HEADER_RELOCATION_START.'/Client/player_register_queue.php');
         die(eRegisterQueueSuccess::SUCCESSFULLY_REGISTERED_PLAYER);
     }
 ?>

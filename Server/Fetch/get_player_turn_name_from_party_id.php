@@ -1,18 +1,18 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Common/globals.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/connect.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Fetch/get_player_turn_name_from_party_id_hfile.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Common/globals.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Server/Include/connect.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Server/Fetch/get_player_turn_name_from_party_id_hfile.php';
 
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_party_hfile.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_player_queue_hfile.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_queue_party_hfile.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Server/Include/DBTables/table_party_hfile.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Server/Include/DBTables/table_player_queue_hfile.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Server/Include/DBTables/table_queue_party_hfile.php';
     
     function get_player_turn_name_from_party_id($param_party_id)
     {
         $local_party_status = GetPartyStatusFromId($param_party_id);
         if ($local_party_status == ePartyStatus::WINNER_PLAYER_1 || $local_party_status == ePartyStatus::WINNER_PLAYER_2)
         {
-            header('location: http://powerplay4/Client/player_play_party.php');
+            header($HEADER_RELOCATION_START.'/Client/player_play_party.php');
             die(ePlayerPlayPartyErrors::ERROR_PARTY_ALREADY_FINISHED);
         }
 

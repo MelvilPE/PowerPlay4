@@ -1,6 +1,6 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/connect.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Common/globals.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Server/Include/connect.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Common/globals.php';
 
     function GetPlayerCellInRequest()
     {
