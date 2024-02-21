@@ -17,6 +17,7 @@
     $party_id = GetPartyIdFromPlayerId($player_id);
     if ($party_id == 0)
     {
+        header('location: http://powerplay4/Client/player_register_queue.php');
         die(ePlayerPlayPartyErrors::ERROR_PLAYER_NOT_PARTY);
     }
 

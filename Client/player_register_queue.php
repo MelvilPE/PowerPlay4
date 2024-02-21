@@ -1,4 +1,7 @@
 <?php
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Common/globals.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Fetch/get_party_id_from_player_id_hfile.php';
+    
     $player_id = 0;
     if (isset($_COOKIE['player_id']))
         $player_id = $_COOKIE['player_id'];
@@ -11,6 +14,14 @@
     if (isset($_COOKIE['player_name']))
     {
         $unregister_request = "?player_name=".$_COOKIE['player_name']."&player_unregister=true";
+    }
+
+    // We redirect to party if it has been started
+    $party_id = get_party_id_from_player_id($player_id);
+    if ($party_id != 0)
+    {
+        header('location: http://powerplay4/Client/player_play_party.php');
+        die(eRegisterQueueSuccess::SUCCESSFULLY_WENT_TO_PARTY);
     }
 ?>
 

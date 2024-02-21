@@ -4,6 +4,7 @@
 
     if (!(isset($_GET['party_id']) && $_GET['party_id'] > 0))
     {
+        header('location: http://powerplay4/Client/player_play_party.php');
         die(eFetchWinnerNameErrors::ERROR_PARTY_ID_IS_NOT_SET);
     }
 
