@@ -75,26 +75,21 @@
         $local_party_grid = json_decode($local_party_grid, true)['party_grid'];
 
         // Just checking valid ranges
-        if ($param_player_cell['x_cell'] < 0)
+        if ($param_player_cell['x_cell'] < 0 || $param_player_cell['x_cell'] >= count($local_party_grid[0]))
             return false;
-        if ($param_player_cell['x_cell'] >= count($local_party_grid[0]) - 1)
-            return false;
-        if ($param_player_cell['y_cell'] < 0)
-            return false;
-        if ($param_player_cell['y_cell'] >= count($local_party_grid) - 1)
+        if ($param_player_cell['y_cell'] < 0 || $param_player_cell['y_cell'] >= count($local_party_grid))
             return false;
 
-        // The previous X cell must be filled with player cell
-        if (($param_player_cell['y_cell'] + 1) >= count($local_party_grid) - 1)
+        // Anyway, we don't replace an already filled cell!
+        if ($local_party_grid[$param_player_cell['y_cell']][$param_player_cell['x_cell']] != eGridColors::EMPTY)
+            return false;
+
+        // Check if cell is above another cell, unless it's the bottom row
+        if ($param_player_cell['y_cell'] < count($local_party_grid) - 1) {
             if ($local_party_grid[$param_player_cell['y_cell'] + 1][$param_player_cell['x_cell']] == eGridColors::EMPTY)
                 return false;
-        
-
-        if ($local_party_grid[$param_player_cell['y_cell']][$param_player_cell['x_cell']] != eGridColors::EMPTY)
-        {
-            return false;
         }
-        
+
         $local_party_grid[$param_player_cell['y_cell']][$param_player_cell['x_cell']] = $param_player_color;
         $local_party_grid = json_encode(["party_grid" => $local_party_grid]);        
 

@@ -23,6 +23,7 @@
     $party_status = GetPartyStatusFromId($party_id);
     if ($party_status == ePartyStatus::WINNER_PLAYER_1 || $party_status == ePartyStatus::WINNER_PLAYER_2)
     {
+        header('location: http://powerplay4/Client/player_play_party.php');
         die(ePlayerPlayPartyErrors::ERROR_PARTY_ALREADY_FINISHED);
     }
 
@@ -57,6 +58,7 @@
     $player_cell = GetPlayerCellInRequest();
     if (count($player_cell) == 0)
     {
+        header('location: http://powerplay4/Client/player_play_party.php');
         die(ePlayerPlayPartyErrors::ERROR_PLAYER_CELL_IS_NOT_SET);
     }
 
@@ -93,6 +95,7 @@
     UpdatePartyStatus($party_id, $party_status);
     if ($player_finished)
     {
+        header('location: http://powerplay4/Client/player_play_party.php');
         if ($player_finished == eGridColors::PLAYER_1)
         {
             die(ePlayerPlayPartySuccess::WINNER_PLAYER_1);
