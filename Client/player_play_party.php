@@ -4,6 +4,8 @@
     require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_party_hfile.php';
     require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_player_party_hfile.php';
 
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Fetch/get_player_turn_name_from_party_id.php';
+
     if (!isset($_COOKIE['player_id']) || !isset($_COOKIE['player_name']))
     {
         header('location: http://powerplay4/Client/Errors/player_play_party_missing_cookies.php');
@@ -22,7 +24,7 @@
         die(ePlayerPlayPartyErrors::ERROR_PARTY_ALREADY_FINISHED);
     }
 
-    $player_turn_name = "";
+    $player_turn_name = get_player_turn_name_from_party_id($party_id);
 ?>
 
 <!DOCTYPE html>
