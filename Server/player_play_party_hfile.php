@@ -2,15 +2,14 @@
     require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/connect.php';
     require_once $_SERVER['DOCUMENT_ROOT'].'/Common/globals.php';
 
-    function GetPlayerGridInRequest()
+    function GetPlayerCellInRequest()
     {
-        $result = "";
-        if (!isset($_GET['player_grid']))
+        $result = array();
+        if (isset($_GET['x_cell']) && isset($_GET['y_cell']))
         {
-            return $result;
+            $result['x_cell'] = $_GET['x_cell'];
+            $result['y_cell'] = $_GET['y_cell'];
         }
-
-        $result = $_GET['player_grid'];
         return $result;
     }
 

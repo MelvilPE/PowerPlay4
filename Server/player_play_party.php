@@ -53,15 +53,16 @@
         die(ePlayerPlayPartyErrors::ERROR_WRONG_PLAYER_TURN);
     }
 
-    $player_grid = GetPlayerGridInRequest();
-    if ($player_grid == "")
+    $player_cell = GetPlayerCellInRequest();
+    if (count($player_cell) == 0)
     {
-        die(ePlayerPlayPartyErrors::ERROR_PLAYER_GRID_IS_NOT_SET);
+        die(ePlayerPlayPartyErrors::ERROR_PLAYER_CELL_IS_NOT_SET);
     }
 
-    if (!UpdatePartyGrid($party_id, $player_grid, $player_color))
+    if (!UpdatePartyGrid($party_id, $player_cell, $player_color))
     {
-        die(ePlayerPlayPartyErrors::ERROR_WRONG_PLAYER_GRID);
+        header('location: http://powerplay4/Client/player_play_party.php');
+        die(ePlayerPlayPartyErrors::ERROR_WRONG_PLAYER_CELL);
     }
 
     $player_finished = IsGridPartyFinished($party_id);
@@ -101,5 +102,6 @@
         }
     }
 
+    header('location: http://powerplay4/Client/player_play_party.php');
     die(ePlayerPlayPartySuccess::SUCCESSFULLY_UPDATED_GRID);
 ?>

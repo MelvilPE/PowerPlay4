@@ -4,6 +4,7 @@
     require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_party_hfile.php';
     require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_player_party_hfile.php';
 
+    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Fetch/get_party_grid_decoded_from_party_id.php';
     require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Fetch/get_player_turn_name_from_party_id.php';
 
     if (!isset($_COOKIE['player_id']) || !isset($_COOKIE['player_name']))
@@ -24,6 +25,7 @@
         die(ePlayerPlayPartyErrors::ERROR_PARTY_ALREADY_FINISHED);
     }
 
+    $party_grid_decoded = get_party_grid_decoded_from_party_id($party_id);
     $player_turn_name = get_player_turn_name_from_party_id($party_id);
 ?>
 
@@ -44,59 +46,35 @@
             <br>
             <table class="table table-bordered">
                 <tbody>
-                    <tr>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                    </tr>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                    </tr>
-                    <tr>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                    </tr>
-                    <tr>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                    </tr>
-                    <tr>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                    </tr>
-                    <tr>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                        <td class="td-childrens"><div class="div-square empty-color"></div></td>
-                    </tr>
+                    <?php
+                        foreach ($party_grid_decoded as $rowindex => $each_grid_line)
+                        {
+                            echo '<tr>';
+                            foreach ($each_grid_line as $colindex => $each_cellstatus)
+                            {
+                                switch ($each_cellstatus)
+                                {
+                                    case eGridColors::EMPTY:
+                                        echo '<td class="td-childrens">';
+                                        echo    '<a href="http://powerplay4/Server/player_play_party.php?x_cell='.$colindex.'&y_cell='.$rowindex.'">';
+                                        echo        '<div class="div-square empty-color"></div>';
+                                        echo    '</a>';
+                                        echo '</td>';
+                                        break;
+                                    case eGridColors::PLAYER_1:
+                                        echo '<td class="td-childrens"><div class="div-square yellow-color"></div></td>';
+                                        break;
+                                    case eGridColors::PLAYER_2:
+                                        echo '<td class="td-childrens"><div class="div-square red-color"></div></td>';
+                                        break;
+                                    default:
+                                        echo '<td class="td-childrens"><div class="div-square empty-color"></div></td>';
+                                        break;
+                                }
+                            }
+                            echo '</tr>';
+                        }
+                    ?>
                 </tbody>
             </table>            
             <br>

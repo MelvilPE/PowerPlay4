@@ -69,62 +69,25 @@
         $statement->execute();
     }
 
-    function UpdatePartyGrid($param_party_id, $param_player_grid, $param_player_color)
+    function UpdatePartyGrid($param_party_id, $param_player_cell, $param_player_color)
     {
-        global $EMPTY_PARTY_GRID;
-        $param_player_grid = json_decode($param_player_grid, true)['party_grid'];
-
-        if (count($param_player_grid) != count($EMPTY_PARTY_GRID))
-        {
-            return false;
-        }
-
-        foreach ($param_player_grid as $each_grid_line)
-        {
-            if (count($each_grid_line) != count($EMPTY_PARTY_GRID[0]))
-            {
-                return false;
-            }
-        }
-
         $local_party_grid = GetPartyGridFromId($param_party_id);
         $local_party_grid = json_decode($local_party_grid, true)['party_grid'];
-        $differences_count = 0;
 
-        foreach ($param_player_grid as $player_grid_rowindex => $each_grid_line)
-        {
-            foreach ($each_grid_line as $player_grid_colindex => $each_cellstatus)
-            {
-                if ($each_cellstatus != $local_party_grid[$player_grid_rowindex][$player_grid_colindex])
-                {
-                    if ($differences_count > 0)
-                    {
-                        return false;
-                    }
-
-                    if ($param_player_grid[$player_grid_rowindex][$player_grid_colindex] != $param_player_color)
-                    {
-                        return false;
-                    }
-
-                    $differences_count += 1;
-                }
-            }
-        }
-
-        if ($differences_count == 0)
+        if ($local_party_grid[$param_player_cell['y_cell']][$param_player_cell['x_cell']] != eGridColors::EMPTY)
         {
             return false;
         }
-
-        $param_player_grid = json_encode(["party_grid" => $param_player_grid]);
+        
+        $local_party_grid[$param_player_cell['y_cell']][$param_player_cell['x_cell']] = $param_player_color;
+        $local_party_grid = json_encode(["party_grid" => $local_party_grid]);        
 
         global $db;
         $sql = "UPDATE table_party SET party_grid = :party_grid
                 WHERE party_id = :party_id;";
 
         $statement = $db->prepare($sql);
-        $statement->bindParam(":party_grid", $param_player_grid);
+        $statement->bindParam(":party_grid", $local_party_grid);
         $statement->bindParam(":party_id", $param_party_id);
         $statement->execute();
         return true;
