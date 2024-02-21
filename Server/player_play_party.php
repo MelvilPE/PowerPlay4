@@ -50,6 +50,7 @@
 
     if ($player_color != $party_status)
     {
+        header('location: http://powerplay4/Client/player_play_party.php');
         die(ePlayerPlayPartyErrors::ERROR_WRONG_PLAYER_TURN);
     }
 

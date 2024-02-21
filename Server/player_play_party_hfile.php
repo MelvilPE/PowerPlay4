@@ -7,8 +7,12 @@
         $result = array();
         if (isset($_GET['x_cell']) && isset($_GET['y_cell']))
         {
-            $result['x_cell'] = $_GET['x_cell'];
-            $result['y_cell'] = $_GET['y_cell'];
+            if (filter_var($_GET['x_cell'], FILTER_VALIDATE_INT) !== false &&
+                filter_var($_GET['y_cell'], FILTER_VALIDATE_INT) !== false)
+            {
+                $result['x_cell'] = $_GET['x_cell'];
+                $result['y_cell'] = $_GET['y_cell'];
+            }
         }
         return $result;
     }

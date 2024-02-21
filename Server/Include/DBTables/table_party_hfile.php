@@ -74,6 +74,22 @@
         $local_party_grid = GetPartyGridFromId($param_party_id);
         $local_party_grid = json_decode($local_party_grid, true)['party_grid'];
 
+        // Just checking valid ranges
+        if ($param_player_cell['x_cell'] < 0)
+            return false;
+        if ($param_player_cell['x_cell'] >= count($local_party_grid[0]) - 1)
+            return false;
+        if ($param_player_cell['y_cell'] < 0)
+            return false;
+        if ($param_player_cell['y_cell'] >= count($local_party_grid) - 1)
+            return false;
+
+        // The previous X cell must be filled with player cell
+        if (($param_player_cell['y_cell'] + 1) >= count($local_party_grid) - 1)
+            if ($local_party_grid[$param_player_cell['y_cell'] + 1][$param_player_cell['x_cell']] == eGridColors::EMPTY)
+                return false;
+        
+
         if ($local_party_grid[$param_player_cell['y_cell']][$param_player_cell['x_cell']] != eGridColors::EMPTY)
         {
             return false;
