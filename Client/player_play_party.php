@@ -1,15 +1,15 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Common/globals.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Common/globals.php';
 
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_party_hfile.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/DBTables/table_player_party_hfile.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Server/Include/DBTables/table_party_hfile.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Server/Include/DBTables/table_player_party_hfile.php';
 
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Fetch/get_party_grid_decoded_from_party_id.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Fetch/get_player_turn_name_from_party_id.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Server/Fetch/get_party_grid_decoded_from_party_id.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Server/Fetch/get_player_turn_name_from_party_id.php';
 
     if (!isset($_COOKIE['player_id']) || !isset($_COOKIE['player_name']))
     {
-        header('location: http://powerplay4/Client/Errors/player_play_party_missing_cookies.php');
+        header($HEADER_RELOCATION_START.'/Client/Errors/player_play_party_missing_cookies.php');
         die(eCookiesErrors::MISSING_COOKIES_FOR_PARTY);
     }
 
@@ -21,7 +21,7 @@
 
     if ($party_status == ePartyStatus::WINNER_PLAYER_1 || $party_status == ePartyStatus::WINNER_PLAYER_2)
     {
-        header('location: http://powerplay4/Client/party_finished.php?party_id='.$party_id);
+        header($HEADER_RELOCATION_START.'/Client/party_finished.php?party_id='.$party_id);
         die(ePlayerPlayPartyErrors::ERROR_PARTY_ALREADY_FINISHED);
     }
 
@@ -56,7 +56,7 @@
                                 {
                                     case eGridColors::EMPTY:
                                         echo '<td class="td-childrens">';
-                                        echo    '<a href="http://powerplay4/Server/player_play_party.php?x_cell='.$colindex.'&y_cell='.$rowindex.'">';
+                                        echo    '<a href="'.$GLOBAL_RELOCATION_START.'/Server/player_play_party.php?x_cell='.$colindex.'&y_cell='.$rowindex.'">';
                                         echo        '<div class="div-square empty-color"></div>';
                                         echo    '</a>';
                                         echo '</td>';
@@ -78,7 +78,7 @@
                 </tbody>
             </table>            
             <br>
-            <a class="btn btn-danger w-100" href="http://powerplay4/Server/player_play_party.php?player_give_up=true" role="button">Do you want to give up ?!</a>
+            <a class="btn btn-danger w-100" href="<?=$GLOBAL_RELOCATION_START?>/Server/player_play_party.php?player_give_up=true" role="button">Do you want to give up ?!</a>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>

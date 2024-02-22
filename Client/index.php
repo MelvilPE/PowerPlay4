@@ -1,3 +1,7 @@
+<?php
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Common/globals.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +17,7 @@
             <h1 class="text-primary text-center">Hello world!</h1>
             <h2 class="text-info text-center">Play PowerPlay4 with your friends on same network!</h2>
             <br>
-            <form action="http://powerplay4/Server/player_register_queue.php" method="GET">
+            <form action="<?=$GLOBAL_RELOCATION_START?>/Server/player_register_queue.php" method="GET">
                 <div class="form-group">
                     <input type="text" class="form-control text-center" id="player_name" name="player_name" placeholder="Set your player name here">
                     <input class="btn btn-primary w-100" type="submit" value="Register in queue!">

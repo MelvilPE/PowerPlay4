@@ -1,5 +1,5 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'].'/Server/Include/connect.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/powerplay4'.'/Server/Include/connect.php';
     function SetQueuePlayersInParty($param_queue_id)
     {
         global $db;
